@@ -39,7 +39,6 @@ datasets/
 
 # Model outputs
 model_outputs/
-models/
 checkpoints/
 artifacts/
 
