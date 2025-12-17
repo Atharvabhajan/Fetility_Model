@@ -26,7 +26,6 @@ ENV/
 
 data/
 datasets/
-*.csv
 *.tsv
 *.parquet
 *.json
