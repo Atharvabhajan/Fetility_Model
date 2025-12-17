@@ -36,7 +36,6 @@ datasets/
 # ============================================================
 
 # Model outputs
-model_outputs/
 checkpoints/
 artifacts/
 
@@ -61,11 +60,10 @@ temp/
 # PLOTS & FIGURES (OPTIONAL – KEEP IF GENERATED)
 # ============================================================
 
-*.png
-*.jpg
-*.jpeg
-*.svg
-*.pdf
+
+
+
+
 
 # ============================================================
 # EXPERIMENT TRACKING
