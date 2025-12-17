@@ -45,7 +45,7 @@ for model_name, file_path in MODEL_FILES.items():
         "y_proba": y_proba
     }
 
-print("✅ All model prediction files loaded successfully")
+print(" All model prediction files loaded successfully")
 
 # =====================================================
 # ROC CURVE COMPARISON (ALL MODELS IN ONE IMAGE)
@@ -138,5 +138,5 @@ summary_df.to_csv(
     index=False
 )
 
-print("\n📊 FINAL COMPARISON SUMMARY\n")
+print("\n FINAL COMPARISON SUMMARY\n")
 print(summary_df)
