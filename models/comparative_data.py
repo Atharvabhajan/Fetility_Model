@@ -289,129 +289,129 @@
 
 
 
-import os
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
+# import os
+# import pandas as pd
+# import numpy as np
+# import matplotlib.pyplot as plt
 
-from sklearn.metrics import (
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    roc_auc_score
-)
+# from sklearn.metrics import (
+#     accuracy_score,
+#     precision_score,
+#     recall_score,
+#     f1_score,
+#     roc_auc_score
+# )
 
-# ============================================================
-# OUTPUT DIRECTORY
-# ============================================================
-OUTPUT_DIR = "comparative_outputs"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+# # ============================================================
+# # OUTPUT DIRECTORY
+# # ============================================================
+# OUTPUT_DIR = "comparative_outputs"
+# os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# ============================================================
-# LOAD MODEL OUTPUT FILES
-# ============================================================
-model_files = {
-    "Logistic Regression": "model_outputs/logisticregression_outputs/test_predictions.csv",
-    "KNN": "model_outputs/knn_outputs/test_predictions_knn.csv",
-    "Random Forest": "model_outputs/random_forest_strict/test_predictions.csv",
-    "XGBoost": "model_outputs/xgboost_outputs/test_predictions_xgb.csv"
-}
+# # ============================================================
+# # LOAD MODEL OUTPUT FILES
+# # ============================================================
+# model_files = {
+#     "Logistic Regression": "model_outputs/logisticregression_outputs/test_predictions.csv",
+#     "KNN": "model_outputs/knn_outputs/test_predictions_knn.csv",
+#     "Random Forest": "model_outputs/random_forest_strict/test_predictions.csv",
+#     "XGBoost": "model_outputs/xgboost_outputs/test_predictions_xgb.csv"
+# }
 
-# ============================================================
-# COMPUTE EVALUATION METRICS
-# ============================================================
-rows = []
+# # ============================================================
+# # COMPUTE EVALUATION METRICS
+# # ============================================================
+# rows = []
 
-for model_name, file_path in model_files.items():
-    df = pd.read_csv(file_path)
+# for model_name, file_path in model_files.items():
+#     df = pd.read_csv(file_path)
 
-    y_true = df["actual"]
-    y_pred = df["predicted"]
-    y_proba = df["probability"]
+#     y_true = df["actual"]
+#     y_pred = df["predicted"]
+#     y_proba = df["probability"]
 
-    rows.append([
-        model_name,
-        accuracy_score(y_true, y_pred),
-        precision_score(y_true, y_pred),
-        recall_score(y_true, y_pred),
-        f1_score(y_true, y_pred),
-        roc_auc_score(y_true, y_proba)
-    ])
+#     rows.append([
+#         model_name,
+#         accuracy_score(y_true, y_pred),
+#         precision_score(y_true, y_pred),
+#         recall_score(y_true, y_pred),
+#         f1_score(y_true, y_pred),
+#         roc_auc_score(y_true, y_proba)
+#     ])
 
-metrics_df = pd.DataFrame(
-    rows,
-    columns=["Model", "Accuracy", "Precision", "Recall", "F1-Score", "ROC-AUC"]
-)
+# metrics_df = pd.DataFrame(
+#     rows,
+#     columns=["Model", "Accuracy", "Precision", "Recall", "F1-Score", "ROC-AUC"]
+# )
 
-metrics_df.set_index("Model", inplace=True)
-metrics_df = metrics_df.round(3)
+# metrics_df.set_index("Model", inplace=True)
+# metrics_df = metrics_df.round(3)
 
-# ============================================================
-# CREATE TABLE IMAGE
-# ============================================================
-fig, ax = plt.subplots(figsize=(11, 4))
-ax.axis("off")
+# # ============================================================
+# # CREATE TABLE IMAGE
+# # ============================================================
+# fig, ax = plt.subplots(figsize=(11, 4))
+# ax.axis("off")
 
-table = ax.table(
-    cellText=metrics_df.values,
-    colLabels=metrics_df.columns,
-    rowLabels=metrics_df.index,
-    cellLoc="center",
-    loc="center"
-)
+# table = ax.table(
+#     cellText=metrics_df.values,
+#     colLabels=metrics_df.columns,
+#     rowLabels=metrics_df.index,
+#     cellLoc="center",
+#     loc="center"
+# )
 
-# ============================================================
-# STYLING
-# ============================================================
-table.auto_set_font_size(False)
-table.set_fontsize(11)
-table.scale(1, 1.8)
+# # ============================================================
+# # STYLING
+# # ============================================================
+# table.auto_set_font_size(False)
+# table.set_fontsize(11)
+# table.scale(1, 1.8)
 
-# Header styling
-for col in range(len(metrics_df.columns)):
-    cell = table[(0, col)]
-    cell.set_facecolor("#1f2937")   # dark slate
-    cell.set_text_props(color="white", weight="bold")
+# # Header styling
+# for col in range(len(metrics_df.columns)):
+#     cell = table[(0, col)]
+#     cell.set_facecolor("#1f2937")   # dark slate
+#     cell.set_text_props(color="white", weight="bold")
 
-# Row label styling
-for row in range(1, len(metrics_df.index) + 1):
-    cell = table[(row, -1)]
-    cell.set_facecolor("#374151")
-    cell.set_text_props(color="white", weight="bold")
+# # Row label styling
+# for row in range(1, len(metrics_df.index) + 1):
+#     cell = table[(row, -1)]
+#     cell.set_facecolor("#374151")
+#     cell.set_text_props(color="white", weight="bold")
 
-# Cell color gradients (performance-based)
-for row in range(1, len(metrics_df.index) + 1):
-    for col in range(len(metrics_df.columns)):
-        value = metrics_df.iloc[row - 1, col]
+# # Cell color gradients (performance-based)
+# for row in range(1, len(metrics_df.index) + 1):
+#     for col in range(len(metrics_df.columns)):
+#         value = metrics_df.iloc[row - 1, col]
 
-        if value >= 0.85:
-            color = "#bbf7d0"  # green
-        elif value >= 0.70:
-            color = "#fef9c3"  # yellow
-        else:
-            color = "#fecaca"  # red
+#         if value >= 0.85:
+#             color = "#bbf7d0"  # green
+#         elif value >= 0.70:
+#             color = "#fef9c3"  # yellow
+#         else:
+#             color = "#fecaca"  # red
 
-        table[(row, col)].set_facecolor(color)
+#         table[(row, col)].set_facecolor(color)
 
-# ============================================================
-# TITLE
-# ============================================================
-plt.title(
-    "Model Evaluation Metrics Comparison",
-    fontsize=14,
-    weight="bold",
-    pad=20
-)
+# # ============================================================
+# # TITLE
+# # ============================================================
+# plt.title(
+#     "Model Evaluation Metrics Comparison",
+#     fontsize=14,
+#     weight="bold",
+#     pad=20
+# )
 
-# ============================================================
-# SAVE IMAGE
-# ============================================================
-plt.savefig(
-    os.path.join(OUTPUT_DIR, "evaluation_metrics_comparison_table.png"),
-    dpi=300,
-    bbox_inches="tight"
-)
-plt.show()
+# # ============================================================
+# # SAVE IMAGE
+# # ============================================================
+# plt.savefig(
+#     os.path.join(OUTPUT_DIR, "evaluation_metrics_comparison_table.png"),
+#     dpi=300,
+#     bbox_inches="tight"
+# )
+# plt.show()
 
-print("✅ Evaluation metrics table saved successfully!")
+# print("✅ Evaluation metrics table saved successfully!")
